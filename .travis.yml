@@ -1,0 +1,13 @@
+dist: xenial
+language: java
+sudo: false
+jdk: openjdk8
+install: true
+cache:
+  directories:
+    - $HOME/.m2
+notifications:
+  email:
+    - prof.zair.ramos@gmail.com
+before_install:
+  - chmod +x mvnw
