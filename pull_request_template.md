@@ -2,7 +2,7 @@
 **READY/IN DEVELOPMENT/HOLD**
 
 ## Description
-Descrição do motivo da execução do Pull Request
+Descrição do motivo da execução do Pull Request ...
 
 ## ToDos
 - [ ] Testes
