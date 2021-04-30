@@ -21,7 +21,7 @@ public class SwaggerConfig {
     private static final String BOOKS_VERSION = "1.0.0";
     private static final String BOOKS_CONTACT_NAME = "Ariane Coelho";
     private static final String BOOKS_CONTACT_URL = "github.com/arianepd";
-    private static final String BOOKS_CONTACT_EMAIL = "arianeclh09@gmail.com";
+    private static final String BOOKS_CONTACT_EMAIL = "ariane-clh@homail.com";
 
     @Bean
     public Docket api(){

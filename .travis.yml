@@ -8,6 +8,6 @@ cache:
     - $HOME/.m2
 notifications:
   email:
-    - prof.zair.ramos@gmail.com
+    - ariane-clh@hotmail.com
 before_install:
   - chmod +x mvnw
