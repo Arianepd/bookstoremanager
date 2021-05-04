@@ -14,7 +14,6 @@ public class Publisher {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-
         private Long id;
 
         @Column(nullable = false, unique = true)
@@ -23,7 +22,7 @@ public class Publisher {
         @Column(nullable = false, unique = true, length = 100)
         private String code;
 
-        @Column(nullable = false, columnDefinition = "TIMES")
+        @Column(nullable = false, columnDefinition = "TIMESTAMP")
         private LocalDate foundationDate;
 
 }
