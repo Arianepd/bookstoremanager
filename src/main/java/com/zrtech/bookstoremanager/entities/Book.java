@@ -22,7 +22,7 @@ public class Book {
     @Column(columnDefinition = "integer default 0")
     private int chapters;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne( fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     private Author author;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
@@ -30,6 +30,9 @@ public class Book {
 
     @ManyToOne(cascade = {CascadeType.MERGE})
     private Publisher publisher;
+
+    @Embedded
+    private Audit audit = new Audit();
 
 
 }

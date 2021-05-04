@@ -9,8 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
-@Builder
+
 @Entity
 
 public class User {
