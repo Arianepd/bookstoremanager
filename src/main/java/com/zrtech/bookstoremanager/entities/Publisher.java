@@ -6,6 +6,7 @@ import sun.util.calendar.BaseCalendar;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity
@@ -25,6 +26,8 @@ public class Publisher {
         @Column(nullable = false, columnDefinition = "TIMESTAMP")
         private LocalDate foundationDate;
 
+        @OneToMany (mappedBy = "publisher", cascade = {CascadeType.MERGE})
+        private List<Book> books;
 }
 
 

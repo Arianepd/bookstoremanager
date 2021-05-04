@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -40,7 +41,11 @@ public class User {
     @Column (nullable = false,columnDefinition ="TIMESTAMP")
     private LocalDate birthdate;
 
+    @Column (nullable = false)
     private String role;
+
+    @OneToMany (mappedBy = "user", cascade = {CascadeType.MERGE})
+    private List<Book> books;
 
 }
 
