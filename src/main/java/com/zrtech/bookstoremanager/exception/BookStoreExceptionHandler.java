@@ -1,9 +1,9 @@
 package com.zrtech.bookstoremanager.exception;
 
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -19,8 +19,9 @@ import java.util.List;
 public class BookStoreExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException exception){
-        return buildResponseEntity(
+    public ResponseEntity<Object> handleEntityNotFoundException(
+            EntityNotFoundException exception){
+        return  buildResponseEntity(
                 HttpStatus.NOT_FOUND,
                 exception.getMessage(),
                 Collections.singletonList(exception.getMessage())
@@ -28,37 +29,49 @@ public class BookStoreExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity<Object> handleEntityExistException(EntityExistsException exception){
-        return buildResponseEntity(
+    public ResponseEntity<Object> handleEEntityExistsException(EntityExistsException exception){
+        return  buildResponseEntity(
                 HttpStatus.BAD_REQUEST,
                 exception.getMessage(),
                 Collections.singletonList(exception.getMessage())
         );
     }
 
-    protected  ResponseEntity<Object> handleMethodArgumentNotValid (
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
             HttpHeaders headers,
             HttpStatus status,
             WebRequest request) {
 
-
         List<String> errors = new ArrayList<>();
         ex.getBindingResult().getFieldErrors()
                 .forEach(fieldError -> errors.add("Field " + fieldError.getField().toUpperCase() +
                         " " + fieldError.getDefaultMessage()));
-
         ex.getBindingResult().getGlobalErrors()
-                .forEach(globalErrors -> errors.add(" Object " + globalErrors.getObjectName() +
-                        " " + globalErrors.getDefaultMessage() ));
+                .forEach(globalErrors -> errors.add("Object " + globalErrors.getObjectName() +
+                        " " + globalErrors.getDefaultMessage()));
+        return buildResponseEntity(HttpStatus.BAD_REQUEST, "Validation Error(s) ", errors);
+    }
 
-                return buildResponseEntity(HttpStatus.BAD_REQUEST, "Validation Error(s) ", errors);
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException exception,
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request) {
+
+        return buildResponseEntity(
+                HttpStatus.BAD_REQUEST,
+                "Malformed JSON and/or field error",
+                Collections.singletonList(exception.getLocalizedMessage())
+        );
     }
 
     private ResponseEntity<Object> buildResponseEntity(
             HttpStatus httpStatus,
             String message,
-            List<String> errors) {
+            List<String> errors){
 
         ApiBookStoreError apiError = ApiBookStoreError.builder()
                 .code(httpStatus.value())
@@ -67,7 +80,7 @@ public class BookStoreExceptionHandler extends ResponseEntityExceptionHandler {
                 .errors(errors)
                 .timestamp(LocalDateTime.now())
                 .build();
+
         return ResponseEntity.status(httpStatus).body(apiError);
     }
-
 }

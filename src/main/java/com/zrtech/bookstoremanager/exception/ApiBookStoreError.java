@@ -5,15 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import sun.plugin.javascript.navig.Link;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ApiBookStoreError {
 
     private int code;
@@ -27,3 +26,10 @@ public class ApiBookStoreError {
 
     private List<String> errors;
 }
+
+
+
+
+
+
+
